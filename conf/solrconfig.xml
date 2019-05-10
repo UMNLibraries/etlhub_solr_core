@@ -695,124 +695,69 @@
      <lst name="defaults">
        <str name="defType">edismax</str>
        <str name="echoParams">explicit</str>
-       <int name="rows">10</int>
-`       <str name="q.alt">*:*</str>
+       <str name="q.alt">*:*</str>
        <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-
+       <int name="qs">1</int>
+       <int name="ps">2</int>
+       <float name="tie">0.01</float>
        <!-- this qf and pf are used by default, if not otherwise specified by
             client. The default blacklight_config will use these for the
             "keywords" search. See the author_qf/author_pf, title_qf, etc
-            below, which the default blacklight_config will specify for
+            _below, which the default blacklight_config will specify for
             those searches. You may also be interested in:
             http://wiki.apache.org/solr/LocalParams
        -->
-
        <str name="qf">
          id
-         title^2.4
-         title_t^2.4
-         title_search^2.4
-         title_s^2.6
-         title_alternative^.5
-         title_alternative_s^.55
-         title_alternative_t^.55
-         contributor^1.1
-         contributor_ss^1.1
-         creator^1.5
-         creator_ss^1.5
-         description
-         publisher
-         publisher_s
-         publisher_t
-         subject^2
-         subject_ss^2.1
-         subject_fast^2
-         subject_fast_ss^2.1
-         notes
-         caption
-         date_created
-         historical_era
-         type
-         format
-         city
-         state
-         country
-         region
-         continent
-         languagelanguage
-         contributing_organization
-         contributing_organization_s
-         transcription
-         translation
-         kaltura_audio
-         kaltura_audio_playlist
-         kaltura_video
-         kaltura_video_playlist
-         kaltura_combo_playlist
-         set_spec
-         collection_name_t
-
-         local_identifier
-         barcode
-         system_identifier
-         dls_identifier
-         persistent_url
-         local_rights
+         title_ssi^100000
+         title_stemmed^25000
+         subject_ssim^1000
+         subject_stemmed^500
+         creator_ssi^250
+         creator_stemmed^50
+         sourceResource_collection_title_ssi^50
+         sourceResource_description_tesi
+         sourceResource_collection_description_tesi
+         dataProvider_ssi
+         tags_ssim
+         import_job_name_ssi
+         import_job_id_isi
+         published_bsi
+         physical_location_ssi
        </str>
        <str name="pf">
-         title^2.4
-         title_s^2.6
-         title_t^2.4
-         title_search^2.4
-         title_alternative^.5
-         title_alternative_s^.55
-         title_alternative_t^.55
-         contributor^1.1
-         contributor_ss^1.1
-         creator^1.5
-         creator_ss^1.5
-         description
-         publisher
-         publisher_s
-         publisher_t
-         subject^2
-         subject_ss^2.1
-         subject_fast^2
-         subject_fast_ss^2.1
-         notes
-         caption
-         contributing_organization
-         transcription
-         translation
-         collection_name_t
+         id
+         title_ssi^100000
+         title_stemmed^25000
+         subject_ssim^1000
+         subject_stemmed^500
+         creator_ssi^250
+         creator_stemmed^50
+         sourceResource_collection_title_ssi^50
+         sourceResource_description_tesi
+         sourceResource_collection_description_tesi
+         dataProvider_ssi
+         tags_ssim
+         import_job_name_ssi
+         import_job_id_isi
+         published_bsi
+         physical_location_ssi
        </str>
 
-       <str name="title_qf">
-         title
-         title_s^2
-      </str>
-
-       <str name="creator_qf">
-         creator
-         creator_ss^2
-      </str>
-
-       <str name="subject_qf">
-         subject^2
-         subject_ss^2.1
-         subject_fast^2
-         subject_fast_ss^2.1
-      </str>
+       <str name="fl">
+         *, score
+       </str>
 
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
-     </lst>
 
+     </lst>
     <arr name="last-components">
       <str>spellcheck</str>
     </arr>
-
   </requestHandler>
+
+<!-- END HUB REQUEST HANDLER -->
 
   <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
   <requestHandler name="/document" class="solr.SearchHandler" >
