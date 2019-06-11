@@ -1,7 +1,9 @@
 FROM  solr:7.3.0
 LABEL maintainer="dls@umn.edu"
 
-ENV CONF_DIR /opt/solr/server/solr/cores/core/conf
-RUN mkdir -p $CONF_DIR
-WORKDIR $CONF_DIR
-COPY . .
+ARG core_dir=/opt/solr/server/solr/cores
+RUN mkdir -p $core_dir
+WORKDIR $core_dir
+COPY --chown=solr:solr . .
+
+EXPOSE 8983
