@@ -177,6 +177,15 @@
 
     <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
+
+    <!-- you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
+    <field name="title_stemmed" type="text_en" stored="false" indexed="true" multiValued="false"/>
+    <field name="subject_stemmed" type="text_en" stored="false" indexed="true" multiValued="true"/>
+    <field name="creator_stemmed" type="text_en" stored="false" indexed="true" multiValued="true"/>
+    <copyField source="title_ssi" dest="title_stemmed"/>
+    <copyField source="subject_ssim" dest="subject_stemmed"/>
+    <copyField source="creator_ssim" dest="creator_stemmed"/>
+
     <!-- Field to use to determine and enforce document uniqueness.
       Unless this field is marked with required="false", it will be a required field
     -->
