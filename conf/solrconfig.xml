@@ -695,27 +695,17 @@
      <lst name="defaults">
        <str name="defType">edismax</str>
        <str name="echoParams">explicit</str>
-       <str name="q.alt">*:*</str>
-       <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-       <int name="qs">1</int>
-       <int name="ps">2</int>
-       <float name="tie">0.01</float>
-       <!-- this qf and pf are used by default, if not otherwise specified by
-            client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc
-            _below, which the default blacklight_config will specify for
-            those searches. You may also be interested in:
-            http://wiki.apache.org/solr/LocalParams
-       -->
+       <int name="rows">10</int>
+`       <str name="q.alt">*:*</str>
        <str name="qf">
          id
-         title_ssi^100000
-         title_stemmed^25000
-         subject_ssim^1000
-         subject_stemmed^500
-         creator_ssi^250
-         creator_stemmed^50
-         sourceResource_collection_title_ssi^50
+         title_ssi^2
+         title_stemmed^2.5
+         subject_ssim^1
+         subject_stemmed^1.5
+         creator_ssi^1
+         creator_stemmed^1.5
+         sourceResource_collection_title_ssi^.5
          sourceResource_description_tesi
          sourceResource_collection_description_tesi
          dataProvider_ssi
@@ -727,13 +717,13 @@
        </str>
        <str name="pf">
          id
-         title_ssi^100000
-         title_stemmed^25000
-         subject_ssim^1000
-         subject_stemmed^500
-         creator_ssi^250
-         creator_stemmed^50
-         sourceResource_collection_title_ssi^50
+         title_ssi^2
+         title_stemmed^2.5
+         subject_ssim^1
+         subject_stemmed^1.5
+         creator_ssi^1
+         creator_stemmed^1.5
+         sourceResource_collection_title_ssi^.5
          sourceResource_description_tesi
          sourceResource_collection_description_tesi
          dataProvider_ssi
@@ -750,6 +740,13 @@
 
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
+       <str name="facet.limit">10</str>
+       <str name="spellcheck">true</str>
+       <str name="spellcheck.dictionary">default</str>
+       <str name="spellcheck.onlyMorePopular">true</str>
+       <str name="spellcheck.extendedResults">true</str>
+       <str name="spellcheck.collate">false</str>
+       <str name="spellcheck.count">5</str>
 
      </lst>
     <arr name="last-components">
@@ -769,113 +766,6 @@
     </lst>
   </requestHandler>
 
-    <requestHandler name="/children" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="echoParams">all</str>
-      <str name="fl">*</str>
-      <str name="q">{!term f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
-    </lst>
-  </requestHandler>
-
-
-<requestHandler name="/child_search" class="solr.SearchHandler" default="true">
-    <!-- default values for query parameters can be specified, these
-         will be overridden by parameters in the request
-      -->
-     <lst name="defaults">
-       <str name="defType">edismax</str>
-       <str name="echoParams">explicit</str>
-       <int name="rows">10</int>
-`       <str name="q.alt">*:*</str>
-       <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-
-       <!-- this qf and pf are used by default, if not otherwise specified by
-            client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc
-            below, which the default blacklight_config will specify for
-            those searches. You may also be interested in:
-            http://wiki.apache.org/solr/LocalParams
-       -->
-
-       <str name="qf">
-         id
-         title^2.4
-         title_s^2.6
-         dls_identifier
-         transcription
-       </str>
-       <str name="pf">
-         id
-         title^2.4
-         title_s^2.6
-         transcription
-       </str>
-
-       <str name="facet">false</str>
-     </lst>
-
-    <arr name="last-components">
-      <str>spellcheck</str>
-    </arr>
-
-  </requestHandler>
-
-  <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
-  <requestHandler name="/document" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="echoParams">all</str>
-      <str name="fl">*</str>
-      <str name="rows">1</str>
-      <str name="q">{!term f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
-    </lst>
-  </requestHandler>
-
-    <requestHandler name="/children" class="solr.SearchHandler" >
-    <lst name="defaults">
-      <str name="echoParams">all</str>
-      <str name="fl">*</str>
-      <str name="q">{!term f=id v=$id}</str> <!-- use id=666 instead of q=id:666 -->
-    </lst>
-  </requestHandler>
-
-<requestHandler name="/collections" class="solr.SearchHandler" default="true">
-    <!-- default values for query parameters can be specified, these
-         will be overridden by parameters in the request
-      -->
-     <lst name="defaults">
-       <str name="defType">edismax</str>
-       <str name="echoParams">explicit</str>
-       <int name="rows">25</int>
-`       <str name="q.alt">*:*</str>
-
-       <!-- this qf and pf are used by default, if not otherwise specified by
-            client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc
-            below, which the default blacklight_config will specify for
-            those searches. You may also be interested in:
-            http://wiki.apache.org/solr/LocalParams
-       -->
-
-       <str name="qf">
-          collection_name
-          collection_name_s^2.4
-          collection_description
-          contributing_organization_name
-          contributing_organization_name_s^4
-          set_spec
-       </str>
-       <str name="pf">
-          collection_name
-          collection_name_s^2.4
-          collection_description
-          contributing_organization
-          contributing_organization_name
-          contributing_organization_name_s^4
-       </str>
-     </lst>
-
-  </requestHandler>
-
   <requestHandler name="/mlt" class="solr.MoreLikeThisHandler">
     <lst name="defaults">
        <str name="qf">
@@ -889,92 +779,6 @@
       <str name="mlt.fl">title,subject,subject_fast,creator</str>
       <int name="mlt.mintf">1</int>
       <int name="mlt.mindf">1</int>
-    </lst>
-  </requestHandler>
-
-  <!-- SearchHandler
-
-       http://wiki.apache.org/solr/SearchHandler
-
-       For processing Search Queries, the primary Request Handler
-       provided with Solr is "SearchHandler" It delegates to a sequent
-       of SearchComponents (see below) and supports distributed
-       queries across multiple shards
-    -->
-  <requestHandler name="/select" class="solr.SearchHandler">
-    <!-- default values for query parameters can be specified, these
-         will be overridden by parameters in the request
-      -->
-    <lst name="defaults">
-      <str name="echoParams">explicit</str>
-      <int name="rows">10</int>
-      <!-- Default search field
-         <str name="df">text</str>
-        -->
-      <!-- Change from JSON to XML format (the default prior to Solr 7.0)
-         <str name="wt">xml</str>
-        -->
-    </lst>
-    <!-- In addition to defaults, "appends" params can be specified
-         to identify values which should be appended to the list of
-         multi-val params from the query (or the existing "defaults").
-      -->
-    <!-- In this example, the param "fq=instock:true" would be appended to
-         any query time fq params the user may specify, as a mechanism for
-         partitioning the index, independent of any user selected filtering
-         that may also be desired (perhaps as a result of faceted searching).
-
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "appends" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <!--
-       <lst name="appends">
-         <str name="fq">inStock:true</str>
-       </lst>
-      -->
-    <!-- "invariants" are a way of letting the Solr maintainer lock down
-         the options available to Solr clients.  Any params values
-         specified here are used regardless of what values may be specified
-         in either the query, the "defaults", or the "appends" params.
-
-         In this example, the facet.field and facet.query params would
-         be fixed, limiting the facets clients can use.  Faceting is
-         not turned on by default - but if the client does specify
-         facet=true in the request, these are the only facets they
-         will be able to see counts for; regardless of what other
-         facet.field or facet.query params they may specify.
-
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "invariants" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <!--
-       <lst name="invariants">
-         <str name="facet.field">cat</str>
-         <str name="facet.field">manu_exact</str>
-         <str name="facet.query">price:[* TO 500]</str>
-         <str name="facet.query">price:[500 TO *]</str>
-       </lst>
-      -->
-    <!-- If the default list of SearchComponents is not desired, that
-         list can either be overridden completely, or components can be
-         prepended or appended to the default list.  (see below)
-      -->
-    <!--
-       <arr name="components">
-         <str>nameOfCustomComponent1</str>
-         <str>nameOfCustomComponent2</str>
-       </arr>
-      -->
-  </requestHandler>
-
-  <!-- A request handler that returns indented JSON by default -->
-  <requestHandler name="/query" class="solr.SearchHandler">
-    <lst name="defaults">
-      <str name="echoParams">explicit</str>
-      <str name="wt">json</str>
-      <str name="indent">true</str>
     </lst>
   </requestHandler>
 
